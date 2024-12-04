@@ -9,8 +9,10 @@
  *			worldtime2text
  */
 
+// Оставил старое ибо мне до пизды фиксить ошибки в code\modules\client\preference_setup\general\03_body.dm
+// Новые можно найти в code\_macros.dm
 // Returns an integer given a hexadecimal number string as input.
-/proc/hex2num(hex)
+/proc/hex2num_old(hex)
 	if (!istext(hex))
 		return
 
@@ -36,7 +38,7 @@
 	return num
 
 // Returns the hex value of a number given a value assumed to be a base-ten value
-/proc/num2hex(num, padlength)
+/proc/num2hex_old(num, padlength)
 	var/global/list/hexdigits = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F")
 
 	. = ""

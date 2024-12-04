@@ -10,6 +10,8 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#include "code\__spaceman_dmm.dm"
+#include "code\__version.dm"
 #include "code\_macros.dm"
 #include "code\client_macros.dm"
 #include "code\hub.dm"
@@ -189,6 +191,12 @@
 #include "code\controllers\subsystems\processing\projectiles.dm"
 #include "code\controllers\subsystems\processing\slow_process.dm"
 #include "code\controllers\subsystems\processing\vines.dm"
+#include "code\core\atom\Transform.dm"
+#include "code\core\datum\IsAbstract.dm"
+#include "code\core\image\Transform.dm"
+#include "code\core\math\math.dm"
+#include "code\core\math\vector2.dm"
+#include "code\core\math\vector3.dm"
 #include "code\datums\ai_law_sets.dm"
 #include "code\datums\ai_laws.dm"
 #include "code\datums\browser.dm"

@@ -34,7 +34,7 @@
 				if(T && (T.z in zlevels))
 					return TRUE
 	return FALSE
-
+/*
 /proc/get_z(O)
 	var/turf/loc = get_turf(O)
 	return loc ? loc.z : 0
@@ -44,7 +44,7 @@
 	if(loc)
 		var/area/res = loc.loc
 		.= res
-
+*/
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)

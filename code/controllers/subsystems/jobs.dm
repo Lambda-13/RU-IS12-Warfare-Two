@@ -197,7 +197,7 @@ SUBSYSTEM_DEF(jobs)
 ///This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until it locates a head or runs out of levels to check
 /datum/controller/subsystem/jobs/proc/FillHeadPosition()
 	for(var/level = 1 to 3)
-		for(var/command_position in GLOB.command_positions)
+		for(var/command_position as anything in GLOB.command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)	continue
 			var/list/candidates = FindOccupationCandidates(job, level)
@@ -205,7 +205,7 @@ SUBSYSTEM_DEF(jobs)
 
 			// Build a weighted list, weight by age.
 			var/list/weightedCandidates = list()
-			for(var/mob/V in candidates)
+			for(var/mob/V as anything in candidates)
 				// Log-out during round-start? What a bad boy, no head position for you!
 				if(!V.client) continue
 				var/age = V.client.prefs.age
@@ -213,20 +213,19 @@ SUBSYSTEM_DEF(jobs)
 				if(age < job.minimum_character_age) // Nope.
 					continue
 
-				switch(age)
-					if(job.minimum_character_age to (job.minimum_character_age+10))
-						weightedCandidates[V] = 3 // Still a bit young.
-					if((job.minimum_character_age+10) to (job.ideal_character_age-10))
-						weightedCandidates[V] = 6 // Better.
-					if((job.ideal_character_age-10) to (job.ideal_character_age+10))
-						weightedCandidates[V] = 10 // Great.
-					if((job.ideal_character_age+10) to (job.ideal_character_age+20))
-						weightedCandidates[V] = 6 // Still good.
-					if((job.ideal_character_age+20) to INFINITY)
-						weightedCandidates[V] = 3 // Geezer.
-					else
-						// If there's ABSOLUTELY NOBODY ELSE
-						if(candidates.len == 1) weightedCandidates[V] = 1
+				if(age < job.minimum_character_age + 10)
+					weightedCandidates[V] = 3 // Still a bit young.
+				if(age < job.ideal_character_age - 10)
+					weightedCandidates[V] = 6 // Better.
+				if(age < job.ideal_character_age + 10)
+					weightedCandidates[V] = 10 // Great.
+				if(age < job.ideal_character_age + 20)
+					weightedCandidates[V] = 6 // Still good.
+				if(age < INFINITY)
+					weightedCandidates[V] = 3 // Geezer.
+				else
+					// If there's ABSOLUTELY NOBODY ELSE
+					if(candidates.len == 1) weightedCandidates[V] = 1
 
 
 			var/mob/new_player/candidate = pickweight(weightedCandidates)

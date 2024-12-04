@@ -168,3 +168,143 @@
 #define cast_new(type, num, args...) if((num) == 1) { new type(args) } else { for(var/i=0;i<(num),i++) { new type(args) } }
 
 #define FLAGS_EQUALS(flag, flags) ((flag & (flags)) == (flags))
+
+// Новые хуексы
+// Если не работает, то ссылайтесь на старые
+// Старые можно найти в code\_helpers\type2type.dm
+#define hex2num(hex) (text2num(hex, 16) || 0)
+#define num2hex(num) num2text(num, 1, 16)
+
+//Do (almost) nothing - indev placeholder for switch case implementations etc
+#define NOOP (.=.);
+
+
+/**
+ * Get the ultimate area of `A`, similarly to [get_turf].
+ *
+ * Use instead of `A.loc.loc`.
+ */
+#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
+
+#define get_x(A) (get_step(A, 0)?.x || 0)
+
+#define get_y(A) (get_step(A, 0)?.y || 0)
+
+#define get_z(A) (get_step(A, 0)?.z || 0)
+
+#define isprojectile(A) istype(A, /obj/item/projectile)
+
+#define isbeam(A) istype(A, /obj/item/projectile/beam)
+
+#define ismagazine(A) istype(A, /obj/item/ammo_magazine)
+
+#define isdatum(A) istype(A, /datum)
+
+#define isdrone(A) istype(A, /mob/living/silicon/robot/drone)
+
+#define isid(A) istype(A, /obj/item/card/id)
+
+#define isspaceturf(A) istype(A, /turf/space)
+
+#define isopenturf(A) istype(A, /turf/simulated/open)
+
+#define ismachinerestricted(A) (issilicon(A) && A.machine_restriction)
+
+#define isplunger(A) istype(A, /obj/item/clothing/mask/plunger) || istype(A, /obj/item/device/plunger/robot)
+
+#define isadmin(X) (check_rights(R_ADMIN, 0, (X)) != 0)
+
+/// General I/O helpers
+#define to_target(target, payload)            target << (payload)
+#define from_target(target, receiver)         target >> (receiver)
+#define image_to(target, image)               to_target(target, image)
+#define to_save(handle, value)                to_target(handle, value) //semantics
+#define from_save(handle, target_var)         from_target(handle, target_var)
+
+#define CanDefaultInteract(user) (CanUseTopic(user, DefaultTopicState()) == STATUS_INTERACTIVE)
+
+#define QDEL_NULL_ASSOC_LIST(x) if(x) { for(var/y in x) { qdel(x[y]) }}; if(x) {x.Cut(); x = null; }
+
+#define DROP_NULL(x) if(x) { x.dropInto(loc); x = null; }
+
+#define DROP_NULL_LIST(x) if(x) { for(var/atom/movable/y in x) { y.dropInto(loc) }}; x.Cut(); x = null;
+
+#define TO_HEX_DIGIT(n) ascii2text((n&15) + ((n&15)<10 ? 48 : 87))
+
+
+/// Semantic define for a 0 int intended for use as a bitfield
+#define EMPTY_BITFIELD 0
+
+
+/// Right-shift of INT by BITS
+#define SHIFTR(INT, BITS) ((INT) >> (BITS))
+
+
+/// Left-shift of INT by BITS
+#define SHIFTL(INT, BITS) ((INT) << (BITS))
+
+
+/// Convenience define for nth-bit flags, 0-indexed
+#define FLAG(BIT) SHIFTL(1, BIT)
+
+
+/// Test bit at index BIT is set in FIELD
+#define GET_BIT(FIELD, BIT) ((FIELD) & FLAG(BIT))
+
+
+/// Test bit at index BIT is set in FIELD; semantic alias of GET_BIT
+#define HAS_BIT(FIELD, BIT) GET_BIT(FIELD, BIT)
+
+
+/// Set bit at index BIT in FIELD
+#define SET_BIT(FIELD, BIT) ((FIELD) |= FLAG(BIT))
+
+
+/// Unset bit at index BIT in FIELD
+#define CLEAR_BIT(FIELD, BIT) ((FIELD) &= ~FLAG(BIT))
+
+
+/// Flip bit at index BIT in FIELD
+#define FLIP_BIT(FIELD, BIT) ((FIELD) ^= FLAG(BIT))
+
+
+/// Test any bits of MASK are set in FIELD
+#define GET_FLAGS(FIELD, MASK) ((FIELD) & (MASK))
+
+
+/// Test all bits of MASK are set in FIELD
+#define HAS_FLAGS(FIELD, MASK) (((FIELD) & (MASK)) == (MASK))
+
+
+/// Set bits of MASK in FIELD
+#define SET_FLAGS(FIELD, MASK) ((FIELD) |= (MASK))
+
+
+/// Unset bits of MASK in FIELD
+#define CLEAR_FLAGS(FIELD, MASK) ((FIELD) &= ~(MASK))
+
+
+/// Flip bits of MASK in FIELD
+#define FLIP_FLAGS(FIELD, MASK) ((FIELD) ^= (MASK))
+
+
+/// Generate random hex up to char length nibbles
+/proc/randhex(nibbles)
+	for (var/i = 1 to nibbles)
+		. += num2text(rand(0, 15), 1, 16)
+
+
+/// Increase the size of L by 1 at the end. Is the old last entry index.
+#define LIST_INC(L) ((L).len++)
+
+/// Increase the size of L by 1 at the end. Is the new last entry index.
+#define LIST_PRE_INC(L) (++(L).len)
+
+/// Decrease the size of L by 1 from the end. Is the old last entry index.
+#define LIST_DEC(L) ((L).len--)
+
+/// Decrease the size of L by 1 from the end. Is the new last entry index.
+#define LIST_PRE_DEC(L) (--(L).len)
+
+/// Explicitly set the length of L to NEWLEN, adding nulls or dropping entries. Is the same value as NEWLEN.
+#define LIST_RESIZE(L, NEWLEN) ((L).len = (NEWLEN))

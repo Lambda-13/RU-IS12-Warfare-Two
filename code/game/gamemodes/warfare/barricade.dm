@@ -152,11 +152,11 @@
 	. = ..()
 
 /obj/structure/defensive_barrier/proc/take_damage(damage)
-	if(damage)
+	damage -= damage * 0.5
+	if(health <= 0)
+		get_destroyed(src)
+	else
 		playsound(src.loc, 'sound/effects/bang.ogg', 75, 1)
-		damage = round(damage * 0.5)
-		if(damage)
-			..()
 
 /obj/structure/defensive_barrier/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = get_turf(src)
@@ -167,14 +167,9 @@
 	bullet_act(P)
 	return FALSE
 
-
 /obj/structure/defensive_barrier/bullet_act(obj/item/projectile/P)
 	..()
 	health -= rand(20,40)
-	if(health <= 0)
-		health = 0
-		get_destroyed()
-
 
 /obj/item/defensive_barrier
 	name = "deployable barrier"
