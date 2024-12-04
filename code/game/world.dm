@@ -80,10 +80,21 @@
 
 #define RECOMMENDED_VERSION 513
 
+/proc/stack_trace(msg)
+	CRASH(msg)
 
+/proc/enable_debugging(mode, port)
+	CRASH("auxtools not loaded")
 
+/proc/auxtools_expr_stub()
+	return
 
 /world/New()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		CALL_EXT(debug_server, "auxtools_init")()
+		enable_debugging()
+
 	//set window title
 	if(config && config.server_name != null)
 		server_name = config.server_name
@@ -511,6 +522,9 @@ var/world_topic_spam_protect_time = world.timeofday
 	..(reason)
 
 /world/Del()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		CALL_EXT(debug_server, "auxtools_shutdown")()
 	callHook("shutdown")
 	return ..()
 
