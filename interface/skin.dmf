@@ -200,6 +200,14 @@ macro "borghotkeymode"
 	elem
 		name = "F8"
 		command = "Invisimin"
+	elem ".winset :map.right-click=false"
+		name = "SHIFT+Shift"
+	elem "Shift"
+		name = "SHIFT"
+		command = ".winset :map.right-click=false"
+	elem "ShiftUp"
+		name = "SHIFT+UP"
+		command = ".winset :map.right-click=true"
 
 macro "macro"
 	elem
@@ -343,6 +351,14 @@ macro "macro"
 	elem
 		name = "Any"
 		command = "keyPress [[*]]"
+	elem ".winset :map.right-click=false"
+		name = "SHIFT+Shift"
+	elem "Shift"
+		name = "SHIFT"
+		command = ".winset :map.right-click=false"
+	elem "ShiftUp"
+		name = "SHIFT+UP"
+		command = ".winset :map.right-click=true"
 
 macro "hotkeymode"
 	elem
@@ -573,6 +589,14 @@ macro "hotkeymode"
 	elem
 		name = "Any"
 		command = "keyPress [[*]]"
+	elem ".winset :map.right-click=false"
+		name = "SHIFT+Shift"
+	elem "Shift"
+		name = "SHIFT"
+		command = ".winset :map.right-click=false"
+	elem "ShiftUp"
+		name = "SHIFT+UP"
+		command = ".winset :map.right-click=true"
 
 macro "borgmacro"
 	elem
@@ -719,6 +743,14 @@ macro "borgmacro"
 	elem
 		name = "F8"
 		command = "Invisimin"
+	elem ".winset :map.right-click=false"
+		name = "SHIFT+Shift"
+	elem "Shift"
+		name = "SHIFT"
+		command = ".winset :map.right-click=false"
+	elem "ShiftUp"
+		name = "SHIFT+UP"
+		command = ".winset :map.right-click=true"
 
 
 menu "menu"

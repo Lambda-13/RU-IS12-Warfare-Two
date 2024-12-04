@@ -96,7 +96,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/add_trader,
 	/client/proc/remove_trader,
 	/datum/admins/proc/sendFax,
-	/client/proc/toggle_right_click,
 	/datum/admins/proc/ToggleCkeyWhitelist,
 	/datum/admins/proc/ReloadCkeyWhitelist,
 	/datum/admins/proc/toggle_panic_bunker,
@@ -401,20 +400,6 @@ var/list/admin_verbs_mentor = list(
 
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-//A verb so that admins can toggle right click if they need to use debug stuff. - Matt
-/client/proc/toggle_right_click()
-	set name = "Toggle Right Click"
-	set category = "Admin"
-
-	if(!show_popup_menus)
-		show_popup_menus = TRUE
-		to_chat(src, "<span class='interface'>Right click enabled.</span>")
-	else
-		show_popup_menus = FALSE
-		to_chat(src, "<span class='interface'>Right click disabled.</span>")
-
 
 /client/proc/admin_ghost()
 	set category = "Admin"
