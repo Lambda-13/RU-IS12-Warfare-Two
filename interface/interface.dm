@@ -181,6 +181,7 @@
 <br>PGDN = activate held object
 <br>Ctrl + Click = drag or bolt doors
 <br>Shift + Click = examine or open doors
+<br>Shift + Right Click = show menu
 <br>Alt + Click = show entities on turf
 <br>Ctrl + Alt + Click = electrify doors
 </span>"}
